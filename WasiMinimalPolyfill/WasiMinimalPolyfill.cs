@@ -22,7 +22,9 @@ namespace WasiMinimalPolyfill
 
         public event WasiMinimalPolyfill.WasmPolyfill.MemoryGrowthEvent OnMemoryGrowth;
 
-        Wasmtime.Memory memory;
+        public Wasmtime.Memory memory;
+
+        public Wasmtime.Instance instance;
 
         static string FS_WRAPPER = "fs_wrapper";
 
@@ -63,12 +65,15 @@ namespace WasiMinimalPolyfill
             WasmPolyfill.AttachClockTimeExport(linker, store, () => memory);
             WasmPolyfill.AttachMemoryGrowthExport(linker, store, OnMemoryGrowth);
 
-            var instance = linker.Instantiate(store, fileSystemModule);
+            instance = linker.Instantiate(store, fileSystemModule);
 
             memory = instance.GetMemory("memory");
 
             instance.GetFunction("_initialize").Invoke();
         }
+
+
+
     }
 
     public class WasmPolyfill

@@ -1,0 +1,5 @@
+packages/
+WasiMinimalPolyfill/bin
+WasiMinimalPolyfill/obj
+*.user
+.vs/
